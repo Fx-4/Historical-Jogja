@@ -1,0 +1,25 @@
+/* loading-animation.css */
+.my-loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(245, 245, 245, 0.9);
+    z-index: 9999;
+    display: none;  /* Hidden by default */
+}
+
+/* Prefix semua class loading dengan my-loading untuk menghindari konflik */
+.my-loading-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.my-loading-bar {
+    /* Style untuk bar loading */
+}
+
+/* ... style loading animation lainnya dengan prefix my-loading- ... */

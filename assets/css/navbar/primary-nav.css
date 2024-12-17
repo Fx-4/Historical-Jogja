@@ -1,0 +1,114 @@
+/* assets/css/navbar/primary-nav.css */
+.primary-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: transform 0.3s ease;
+}
+
+.primary-nav.nav-hidden {
+    transform: translateY(-100%);
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0.75rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-brand a {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: #914e18;
+}
+
+.nav-brand img {
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.nav-brand:hover img {
+    transform: scale(1.05);
+}
+
+.nav-brand span {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-links a {
+    color: #1f2937;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: #914e18;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-links a:hover::after {
+    width: 80%;
+}
+
+.nav-links a.active {
+    background: #914e18;
+    color: white;
+}
+
+.nav-links a.active::after {
+    display: none;
+}
+
+/* Animation classes for each link */
+.nav-links a {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-hidden .nav-links a {
+    transform: translateY(-100%);
+    opacity: 0;
+}
+
+/* Stagger the animation for each link */
+.nav-links a:nth-child(1) { transition-delay: 0ms; }
+.nav-links a:nth-child(2) { transition-delay: 50ms; }
+.nav-links a:nth-child(3) { transition-delay: 100ms; }
+.nav-links a:nth-child(4) { transition-delay: 150ms; }
+.nav-links a:nth-child(5) { transition-delay: 200ms; }
+.nav-links a:nth-child(6) { transition-delay: 250ms; }
+.nav-links a:nth-child(7) { transition-delay: 300ms; }
+
+@media (max-width: 768px) {
+    .primary-nav {
+        display: none;
+    }
+}

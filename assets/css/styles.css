@@ -1,0 +1,670 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+}
+
+/* Header dan Navigation */
+header {
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    height: 60px;
+    background-color: rgb(139, 69, 19);
+}
+
+/* Burger Menu Button */
+.burger-menu {
+    display: none;
+    cursor: pointer;
+    padding: 15px;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1001;
+    background-color: transparent;
+    border: none;
+}
+
+.burger-menu span {
+    display: block;
+    width: 30px;
+    height: 3px;
+    background-color: #f9f5e9;
+    margin: 6px 0;
+    transition: 0.4s;
+    border-radius: 2px;
+}
+
+nav {
+    width: 100%;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(139, 69, 19);
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+nav ul li {
+    margin: 50px;
+    
+    margin-bottom: auto;
+}
+
+nav ul li a {
+    color: #f9f5e9;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+nav ul li a:hover {
+    color: #ffd700;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-3px);
+    padding: 0.5rem 1rem;
+}
+
+.hero-section {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    overflow: hidden;
+    padding-top:  55px;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out 2.5s forwards; /* Muncul setelah animasi zoom selesai */
+}
+
+.hero-content h1 {
+    font-size: 4em;
+    margin-bottom: 20px;
+}
+
+.hero-content h1 span {
+    color: #f7c042;
+}
+
+.hero-content p {
+    font-size: 1.5em;
+}
+
+.scroll-down {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #f7c042;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.scroll-down:hover {
+    background: #e5a528;
+}
+
+.candi-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('candi.jpg') center/cover no-repeat;
+    z-index: 1;
+    filter: brightness(0.6);
+    animation: zoomOut 2s ease-in-out forwards;
+}
+
+.clouds {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('clouds.png') repeat-x;
+    z-index: 3;
+    animation: zoomOut 2s ease-in-out forwards, moveClouds 10s linear infinite;
+    opacity: 0.7;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes moveClouds {
+    from { background-position: 0 0; }
+    to { background-position: 100% 0; }
+}
+
+@keyframes zoomOut {
+    0% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.bangunan-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.bangunan-item {
+    width: 45%;
+    margin-bottom: 20px;
+    background: #f3f3f3;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.bangunan-item img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+    .burger-menu {
+        display: block;
+    }
+
+    nav ul {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: rgb(139, 69, 19);
+        padding: 0;
+    }
+
+    nav ul.active {
+        display: flex;
+    }
+
+    nav ul li {
+        margin: 15px 0;
+    }
+
+    .bangunan-item {
+        width: 90%;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5em;
+    }
+    
+    .hero-section {
+        padding-top: 150px;
+    }
+}
+
+#bangunan-bersejarah {
+    background-color: cornsilk; 
+    color: black; 
+    padding: 50px 20px;
+    text-align: center;
+}
+
+#bangunan-bersejarah h2 {
+    font-size: 3em;
+    margin-bottom: 30px;
+    color: #f7c042; 
+}
+
+.bangunan-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.bangunan-item {
+    width: 45%;
+    background: rgba(255, 255, 255, 0.1); 
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bangunan-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.bangunan-item img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    filter: brightness(0.8); 
+    transition: filter 0.3s ease;
+}
+
+.bangunan-item:hover img {
+    filter: brightness(1);
+}
+
+.bangunan-item h3 {
+    font-size: 2em;
+    color: #f7c042; 
+    margin-bottom: 10px;
+}
+
+.bangunan-item p {
+    font-size: 1em;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .bangunan-item {
+        width: 100%;
+    }
+
+    #bangunan-bersejarah h2 {
+        font-size: 2.5em;
+    }
+}
+
+/* Galeri Foto */
+#galeri {
+    padding: 50px 20px;
+    background: #f3f3f3;
+    text-align: center;
+}
+
+#galeri h2 {
+    font-size: 2.5em;
+    color: #8B4513;
+    margin-bottom: 30px;
+}
+
+/* Container grid untuk foto */
+.galeri-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    justify-items: center;
+}
+
+/* Item galeri */
+.galeri-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.galeri-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+/* Hover efek */
+.galeri-item:hover {
+    transform: scale(1.05);
+}
+
+.galeri-item:hover img {
+    transform: scale(1.1);
+}
+
+/* Deskripsi pada foto */
+.galeri-item p {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    font-size: 0.9em;
+    padding: 10px;
+    margin: 0;
+    text-align: center;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.galeri-item:hover p {
+    transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .galeri-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    #galeri h2 {
+        font-size: 2em;
+    }
+}
+
+/* Timeline Container */
+.timeline-container {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+/* Garis tengah timeline */
+.timeline-container::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    background-color: #f7c042;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Kotak timeline */
+.timeline-item {
+    position: relative;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 45%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Style untuk item di sisi kiri dan kanan */
+.timeline-item-left {
+    left: 0;
+}
+
+.timeline-item-right {
+    left: 55%;
+}
+
+/* Garis penghubung ke timeline */
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 15px;
+    border-style: solid;
+}
+
+.timeline-item-left::before {
+    left: 100%;
+    border-width: 10px 0 10px 10px;
+    border-color: transparent transparent transparent #f7c042;
+}
+
+.timeline-item-right::before {
+    right: 100%;
+    border-width: 10px 10px 10px 0;
+    border-color: transparent #f7c042 transparent transparent;
+}
+
+/* Header, tanggal, dan deskripsi timeline */
+.timeline-item h3 {
+    color: #8B4513;
+    font-size: 1.5em;
+    margin-bottom: 5px;
+}
+
+.timeline-item .date {
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.timeline-item p {
+    line-height: 1.6;
+}
+
+/* Animasi fade-in ke atas */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+    .timeline-item {
+        width: 100%;
+        left: 0 !important;
+        text-align: center;
+    }
+
+    .timeline-container::after {
+        left: 5%;
+    }
+}
+
+/* Kuis Interaktif */
+#quiz {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #f9f9f9;
+}
+
+#quiz h2 {
+    color: #8B4513;
+    font-size: 2.5em;
+    margin-bottom: 15px;
+}
+
+#quiz-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(0.9);
+    opacity: 0;
+    animation: popIn 0.4s ease-out forwards;
+}
+
+#quiz-container p {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#start-quiz {
+    background-color: #f7c042;
+    color: #333;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+#start-quiz:hover {
+    background-color: #e5a528;
+    transform: scale(1.05);
+}
+
+.quiz-option {
+    display: block;
+    background-color: #f3f3f3;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.quiz-option:hover {
+    background-color: #f7c042;
+}
+
+.quiz-option.selected {
+    background-color: #f7c042;
+    color: #333;
+}
+
+.quiz-button {
+    background-color: #8B4513;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.quiz-button:hover {
+    background-color: #D2691E;
+}
+
+/* Animasi Pop-in untuk kuis */
+@keyframes popIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+#peta-wisata {
+    padding: 50px 20px;
+    background: #f9f9f9;
+    text-align: center;
+}
+
+#peta-wisata h2 {
+    font-size: 2.5em;
+    color: #8B4513;
+    margin-bottom: 30px;
+}
+
+.map-container {
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+iframe {
+    border: 0;
+}
+
+#kontak {
+    background: #f7c042;
+    color: #333;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+#contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+    display: grid;
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#contact-form input,
+#contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#contact-form button {
+    background-color: #8B4513;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#contact-form button:hover {
+    background-color: #D2691E;
+}
+
+footer {
+    background: linear-gradient(to right, #8B4513, #D2691E);
+    color: #fff;
+    padding: 30px 0;
+    text-align: center;
+    margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+    .timeline-item {
+        width: calc(100% - 40px);
+        left: 20px !important;
+    }
+
+    .bangunan-container,
+    .galeri-container {
+        grid-template-columns: 1fr;
+    }
+
+    .timeline-container::after {
+        left: 20px;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+

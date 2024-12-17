@@ -1,0 +1,506 @@
+/* Reset dan Variabel */
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #64748b;
+    --danger-color: #dc2626;
+    --success-color: #16a34a;
+    --background-color: #f1f5f9;
+    --text-color: #1e293b;
+    --border-color: #e2e8f0;
+    --sidebar-width: 280px;
+    --header-height: 64px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    font-weight: normal;
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1400px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-brand {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    width: 758.44px;
+    height: 41.59px;
+}
+
+/* Nav Link dengan font-weight yang konsisten */
+.nav-link {
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: background-color 0.2s, color 0.2s;
+    font-size: 0.875rem;
+    font-weight: 400; /* Mengubah ke normal weight */
+}
+
+.nav-link:hover {
+    background-color: var(--background-color);
+}
+
+.nav-link.active {
+    background-color: var(--primary-color);
+    color: #fff;
+    font-weight: 400; /* Memastikan tetap konsisten saat active */
+}
+
+.nav-link.logout {
+    background-color: var(--danger-color);
+    color: #fff;
+    font-weight: 400; /* Memastikan tetap konsisten untuk logout */
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: var(--header-height);
+    width: var(--sidebar-width);
+    height: calc(100vh - var(--header-height));
+    background-color: #fff;
+    border-right: 1px solid var(--border-color);
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-nav {
+    padding: 1.5rem;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+}
+
+.sidebar-nav a {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 0.375rem;
+    margin-bottom: 0.5rem;
+    transition: all 0.2s;
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav a.active {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+/* Main Content */
+.main-content {
+    margin-left: var(--sidebar-width);
+    margin-top: var(--header-height);
+    padding: 2rem;
+}
+
+.content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.page-title {
+    font-size: 1.875rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
+/* Form Sections */
+.content-section {
+    background-color: #fff;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.content-section h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+}
+
+/* Form Elements */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.375rem;
+    font-family: inherit;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+/* Upload Area */
+.upload-area {
+    border: 2px dashed var(--border-color);
+    border-radius: 0.5rem;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+.upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.upload-icon {
+    font-size: 2rem;
+}
+
+.upload-text {
+    font-weight: 500;
+}
+
+.upload-info {
+    font-size: 0.875rem;
+    color: var(--secondary-color);
+}
+
+/* Buttons */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.375rem;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: #fff;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+    
+    .nav-links.active {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #fff;
+        padding: 1rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+}
+/* Styling untuk menu navigasi aktif */
+.sidebar-nav a.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Memastikan sections memiliki padding yang cukup */
+section {
+    scroll-margin-top: 80px; /* Untuk kompensasi fixed header */
+}
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Active section highlight */
+.content-section:target {
+    animation: highlight 1s ease-out;
+}
+
+@keyframes highlight {
+    0% {
+        background-color: rgba(37, 99, 235, 0.1);
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
+.gallery-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+    min-height: 50px; /* Tambahkan ini */
+}
+
+.gallery-upload {
+    margin-top: 1.5rem;
+}
+
+.preview-item {
+    position: relative;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.preview-item:hover {
+    transform: translateY(-2px);
+}
+
+.preview-item img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.caption-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.875rem;
+    font-family: inherit;
+    resize: none;
+    transition: background-color 0.2s;
+}
+
+.caption-input:focus {
+    outline: none;
+    background-color: #f8fafc;
+}
+
+.caption-input::placeholder {
+    color: #94a3b8;
+}
+
+.remove-preview {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 28px;
+    height: 28px;
+    border-radius: 9999px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    transition: all 0.2s;
+    backdrop-filter: blur(4px);
+    z-index: 10;
+}
+
+.remove-preview:hover {
+    background: var(--danger-color);
+    transform: scale(1.1);
+}
+
+.gallery-upload {
+    margin-top: 1.5rem;
+}
+
+.upload-placeholder {
+    border: 2px dashed var(--border-color);
+    border-radius: 0.5rem;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.upload-placeholder:hover {
+    border-color: var(--primary-color);
+    background-color: #f8fafc;
+}
+
+.upload-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.upload-text {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    display: block;
+}
+
+.upload-info {
+    font-size: 0.875rem;
+    color: var(--secondary-color);
+    display: block;
+}
+
+#galleryImages {
+    display: none;
+}
+
+/* Loading state for uploads */
+.preview-item.uploading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    color: var(--primary-color);
+}
+
+/* Error state */
+.preview-item.error {
+    border: 1px solid var(--danger-color);
+}
+
+.preview-item.error::after {
+    content: attr(data-error);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.5rem;
+    background: rgba(220, 38, 38, 0.9);
+    color: white;
+    font-size: 0.75rem;
+    text-align: center;
+}
+
+/* Success animation */
+@keyframes successPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.preview-item.success {
+    animation: successPulse 0.3s ease-in-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .gallery-preview {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    .preview-item img {
+        height: 120px;
+    }
+
+    .caption-input {
+        padding: 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .remove-preview {
+        width: 24px;
+        height: 24px;
+        font-size: 1rem;
+    }
+}

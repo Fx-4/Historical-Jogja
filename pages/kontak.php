@@ -272,13 +272,13 @@ $user_data = isset($_COOKIE['historical_jogja_user']) ? $_COOKIE['historical_jog
                                <li>Database Architecture</li>
                            </ul>
                            <div class="social-links">
-                               <a href="#" class="social-link">
+                               <a href="https://github.com/Fx-4/" class="social-link" target="_blank">
                                    <i class="fab fa-github"></i>
                                </a>
-                               <a href="#" class="social-link">
+                               <a href="https://www.linkedin.com/in/haikal-helmy-875787305/" class="social-link" target="_blank">
                                    <i class="fab fa-linkedin"></i>
                                </a>
-                               <a href="#" class="social-link">
+                               <a href="#" class="social-link" target="_blank">
                                    <i class="fab fa-twitter"></i>
                                </a>
                            </div>
@@ -304,13 +304,13 @@ $user_data = isset($_COOKIE['historical_jogja_user']) ? $_COOKIE['historical_jog
                                <li>Prototyping</li>
                            </ul>
                            <div class="social-links">
-                               <a href="#" class="social-link">
-                                   <i class="fab fa-dribbble"></i>
+                               <a href="https://github.com/aiceu" class="social-link" target="_blank">
+                                   <i class="fab fa-github"></i>
                                </a>
-                               <a href="#" class="social-link">
+                               <a href="#" class="social-link" target="_blank">
                                    <i class="fab fa-behance"></i>
                                </a>
-                               <a href="#" class="social-link">
+                               <a href="#" class="social-link" target="_blank">
                                    <i class="fab fa-instagram"></i>
                                </a>
                            </div>
@@ -335,13 +335,13 @@ $user_data = isset($_COOKIE['historical_jogja_user']) ? $_COOKIE['historical_jog
                                <li>Digital Storytelling</li>
                            </ul>
                            <div class="social-links">
-                               <a href="#" class="social-link">
+                               <a href="#" class="social-link" target="_blank">
                                    <i class="fab fa-medium"></i>
                                </a>
-                               <a href="#" class="social-link">
+                               <a href="#" class="social-link" target="_blank">
                                    <i class="fab fa-linkedin"></i>
                                </a>
-                               <a href="#" class="social-link">
+                               <a href="#" class="social-link" target="_blank">
                                    <i class="fab fa-instagram"></i>
                                </a>
                            </div>
@@ -446,17 +446,7 @@ $user_data = isset($_COOKIE['historical_jogja_user']) ? $_COOKIE['historical_jog
                    </ul>
                </div>
 
-               <div class="footer-section">
-                   <h3 class="footer-title">Newsletter</h3>
-                   <form class="newsletter-form">
-                       <div class="form-group">
-                           <input type="email" placeholder="Masukkan email Anda" required>
-                           <button type="submit">
-                               <i class="fas fa-arrow-right"></i>
-                           </button>
-                       </div>
-                   </form>
-               </div>
+
            </div>
        </div>
 

@@ -27,7 +27,7 @@ services:
       MYSQL_ROOT_HOST: '%'
     volumes:
       - mariadb_data:/var/lib/mysql
-      - ./dbdump/historical_jogja.sql:/docker-entry-point-initdb.d/historical_jogja.sql
+      # - ./dbdump/historical_jogja.sql:/docker-entry-point-initdb.d/historical_jogja.sql Unimplemented
     networks:
       - app-network
 

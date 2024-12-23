@@ -49,6 +49,7 @@ $categories = $conn->query($sql_categories);
     <link rel="stylesheet" href="../assets/css/petawisata.css">
     <link rel="stylesheet" href="../assets/css/navbar/primary-nav.css">
     <link rel="stylesheet" href="../assets/css/navbar/mobile-nav.css">
+    <link rel="stylesheet" href="<?php echo __DIR__ . '/../assets/css/footer-waves.css'; ?>">
 </head>
 
 <body>
@@ -133,41 +134,35 @@ $categories = $conn->query($sql_categories);
         </div>
     </main>
     
-    <!-- Footer -->
+<!-- At the end of petawisata.php, before closing body tag -->
 <footer class="site-footer">
-<div class="footer-waves">
-    <svg class="waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2880 320">
-        <path fill="#914e18" fill-opacity="1" d="M0,96 
-            C360,120,720,160,1080,160 
-            C1440,160,1800,120,2160,112 
-            C2520,104,2880,128,3240,138.7 
-            L3600,128 L3600,320 L0,320 Z" 
-            style="transform-origin: center; transform: scale(1.5);">
-        </path>
-    </svg>
+    <!-- Wave Animation -->
+    <div class="footer-waves-wrapper">
+    <?php 
+    $svgPath = __DIR__ . '/../components/footer/footer-waves-svg.php';
+    if (file_exists($svgPath)) {
+        include $svgPath;
+    } else {
+        echo "<!-- SVG file not found at: $svgPath -->";
+    }
+    ?>
 </div>
-    
+
+    <!-- Footer Content -->
     <div class="footer-content">
         <div class="footer-grid">
+            <!-- Company Info Section -->
             <div class="footer-section">
                 <h3 class="footer-title">Historical Jogja</h3>
                 <p class="footer-desc">Melestarikan Warisan Sejarah Yogyakarta melalui teknologi digital yang inovatif.</p>
                 <div class="footer-social">
-                    <a href="#" class="social-link" title="Facebook">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="#" class="social-link" title="Instagram">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="#" class="social-link" title="Twitter">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" class="social-link" title="YouTube">
-                        <i class="fab fa-youtube"></i>
-                    </a>
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
 
+            <!-- Quick Links Section -->
             <div class="footer-section">
                 <h3 class="footer-title">Tautan Cepat</h3>
                 <ul class="footer-links">
@@ -175,42 +170,25 @@ $categories = $conn->query($sql_categories);
                     <li><a href="bbsejarah.php">Bangunan Bersejarah</a></li>
                     <li><a href="gallery.php">Galeri</a></li>
                     <li><a href="timeline.php">Timeline</a></li>
-                    <li><a href="quiz.php">Kuis</a></li>
+                    <li><a href="kuis.php">Kuis</a></li>
+                    <li><a href="petawisata.php">Peta</a></li>
+                    <li><a href="kontak.php">Kontak</a></li>
                 </ul>
             </div>
 
+            <!-- Contact Section -->
             <div class="footer-section">
                 <h3 class="footer-title">Kontak</h3>
                 <ul class="footer-contact">
-                    <li>
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Jl. Malioboro No. 123, Yogyakarta</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-phone"></i>
-                        <span>+62 274 123456</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-envelope"></i>
-                        <span>info@historicaljogja.com</span>
-                    </li>
+                    <li><i class="fas fa-map-marker-alt"></i> Jl. Malioboro No. 123, Yogyakarta</li>
+                    <li><i class="fas fa-phone"></i> +62 274 123456</li>
+                    <li><i class="fas fa-envelope"></i> info@historicaljogja.com</li>
                 </ul>
-            </div>
-
-            <div class="footer-section">
-                <h3 class="footer-title">Newsletter</h3>
-                <form class="newsletter-form">
-                    <div class="form-group">
-                        <input type="email" placeholder="Masukkan email Anda" required>
-                        <button type="submit">
-                            <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
 
+    <!-- Copyright -->
     <div class="footer-bottom">
         <p>&copy; <?php echo date('Y'); ?> Historical Jogja. All rights reserved.</p>
     </div>
@@ -222,7 +200,6 @@ $categories = $conn->query($sql_categories);
             crossorigin=""></script>
 
     <!-- Navigation Scripts -->
-    <script src="../assets/js/navbar/animated-navbar.js" defer></script>
     <script src="../assets/js/navbar/primary-nav.js" defer></script>
     <script src="../assets/js/navbar/mobile-nav.js" defer></script>
 
@@ -396,6 +373,34 @@ $categories = $conn->query($sql_categories);
                 document.getElementById('buildingModal').classList.remove('active');
             }
         });
+
+            // Handle map centering from URL parameters
+    window.addEventListener('load', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const lat = urlParams.get('lat');
+        const lng = urlParams.get('lng');
+        const zoom = urlParams.get('zoom');
+        const shouldCenter = urlParams.get('center');
+
+        if (lat && lng && shouldCenter === 'true') {
+            map.setView([parseFloat(lat), parseFloat(lng)], zoom ? parseInt(zoom) : 16);
+            
+            // Find and open the corresponding marker's popup
+            Object.values(markers).forEach(marker => {
+                const markerLatLng = marker.getLatLng();
+                if (markerLatLng.lat === parseFloat(lat) && markerLatLng.lng === parseFloat(lng)) {
+                    marker.openPopup();
+                }
+            });
+
+            // Scroll to map if there's a hash
+            if (window.location.hash === '#map') {
+                document.querySelector('.map-wrapper').scrollIntoView({ 
+                    behavior: 'smooth'
+                });
+            }
+        }
+    });
     </script>
 </body>
 </html>

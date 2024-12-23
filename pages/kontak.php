@@ -1,13 +1,10 @@
 <?php
-// Tambahkan ini di paling atas kontak.php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Kemudian cek session dan database connection
 session_start();
 require_once '../config/db-connect.php';
 
-// Inisialisasi koneksi database
 try {
     $db = new Database();
     $conn = $db->connect();
@@ -19,94 +16,102 @@ try {
     die("Connection Error: " . $e->getMessage());
 }
 
-// Message variables initialization
 $feedback = [
     'type' => '',
     'message' => '',
     'icon' => ''
 ];
 
-// Cookie check
-if(isset($_COOKIE['historical_jogja_user'])) {
-    error_log("Cookie exists: " . $_COOKIE['historical_jogja_user']);
-} else {
-    error_log("Cookie not set");
-}
+// Debug database connection
+error_log("Database connection status: " . ($conn ? "Connected" : "Failed"));
 
-// Handle form submission with enhanced validation and feedback
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get and sanitize form data
-    $nama = trim(filter_var($_POST['nama'], FILTER_SANITIZE_STRING));
-    $email = trim(filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
-    $pesan = trim(filter_var($_POST['pesan'], FILTER_SANITIZE_STRING));
-    
-    // Enhanced validation
-    $errors = [];
-    if (empty($nama)) {
-        $errors[] = "Nama lengkap harus diisi";
-    } elseif (strlen($nama) < 3) {
-        $errors[] = "Nama terlalu pendek";
-    }
-    
-    if (empty($email)) {
-        $errors[] = "Email harus diisi";
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "Format email tidak valid";
-    }
-    
-    if (empty($pesan)) {
-        $errors[] = "Pesan harus diisi";
-    } elseif (strlen($pesan) < 10) {
-        $errors[] = "Pesan terlalu pendek (minimal 10 karakter)";
-    }
-    // If no validation errors, proceed
-   if (empty($errors)) {
     try {
-        // Set cookie with enhanced security
-        setcookie('historical_jogja_user', hash('sha256', $email), [
-            'expires' => time() + (86400 * 30), // 30 days
-            'path' => '/',
-            'secure' => true,
-            'httponly' => true,
-            'samesite' => 'Strict'
-        ]);
+        // Sanitize input
+        $nama = $conn->real_escape_string($_POST['nama']);
+        $email = $conn->real_escape_string($_POST['email']);
+        $pesan = $conn->real_escape_string($_POST['pesan']);
 
-        // Prepare statement with timestamp
-        $sql = "INSERT INTO contact_messages (nama, email, pesan, status, created_at) 
-                VALUES (?, ?, ?, 0, CURRENT_TIMESTAMP)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sss", $nama, $email, $pesan);
+        // Debug input
+        error_log("Form data received - Name: $nama, Email: $email");
+
+        // Validation
+        $errors = [];
+        if (empty($nama)) {
+            $errors[] = "Nama lengkap harus diisi";
+        } elseif (strlen($nama) < 3) {
+            $errors[] = "Nama terlalu pendek";
+        }
         
-        if ($stmt->execute()) {
-            $feedback = [
-                'type' => 'success',
-                'message' => "Terima kasih! Pesan Anda telah terkirim dan akan segera kami tanggapi.",
-                'icon' => 'check-circle'
-            ];
-            // Clear form data
-            $nama = $email = $pesan = '';
+        if (empty($email)) {
+            $errors[] = "Email harus diisi";
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = "Format email tidak valid";
+        }
+        
+        if (empty($pesan)) {
+            $errors[] = "Pesan harus diisi";
+        } elseif (strlen($pesan) < 10) {
+            $errors[] = "Pesan terlalu pendek (minimal 10 karakter)";
+        }
+
+        if (empty($errors)) {
+            // Insert into database with correct column names
+            $sql = "INSERT INTO contact_messages (name, email, message, status, created_at) 
+                    VALUES (?, ?, ?, 0, CURRENT_TIMESTAMP)";
+            
+            $stmt = $conn->prepare($sql);
+            if (!$stmt) {
+                throw new Exception("Prepare failed: " . $conn->error);
+            }
+
+            $stmt->bind_param("sss", $nama, $email, $pesan);
+            
+            if ($stmt->execute()) {
+                error_log("Message inserted successfully. ID: " . $stmt->insert_id);
+                
+                setcookie('historical_jogja_last_contact', time(), [
+                    'expires' => time() + (86400 * 30),
+                    'path' => '/',
+                    'secure' => true,
+                    'httponly' => true,
+                    'samesite' => 'Strict'
+                ]);
+
+                $feedback = [
+                    'type' => 'success',
+                    'message' => "Terima kasih! Pesan Anda telah terkirim dan akan segera kami tanggapi.",
+                    'icon' => 'check-circle'
+                ];
+                
+                // Clear form data
+                $nama = $email = $pesan = '';
+            } else {
+                throw new Exception("Execute failed: " . $stmt->error);
+            }
         } else {
-            throw new Exception("Database error");
+            $feedback = [
+                'type' => 'error',
+                'message' => implode("<br>", $errors),
+                'icon' => 'exclamation-triangle'
+            ];
         }
     } catch (Exception $e) {
+        error_log("Error in contact form: " . $e->getMessage());
         $feedback = [
             'type' => 'error',
             'message' => "Maaf, terjadi kesalahan teknis. Silakan coba beberapa saat lagi.",
             'icon' => 'exclamation-circle'
         ];
-        error_log("Contact form error: " . $e->getMessage());
     }
-} else {
-    $feedback = [
-        'type' => 'error',
-        'message' => implode("<br>", $errors),
-        'icon' => 'exclamation-triangle'
-    ];
-}
 }
 
-// Get user data from cookie if exists
-$user_data = isset($_COOKIE['historical_jogja_user']) ? $_COOKIE['historical_jogja_user'] : '';
+// Check cookie for debugging
+if (isset($_COOKIE['historical_jogja_last_contact'])) {
+    error_log("Last contact cookie exists: " . $_COOKIE['historical_jogja_last_contact']);
+} else {
+    error_log("No last contact cookie found");
+}
 ?>
 
 <!DOCTYPE html>
@@ -278,8 +283,8 @@ $user_data = isset($_COOKIE['historical_jogja_user']) ? $_COOKIE['historical_jog
                                <a href="https://www.linkedin.com/in/haikal-helmy-875787305/" class="social-link" target="_blank">
                                    <i class="fab fa-linkedin"></i>
                                </a>
-                               <a href="#" class="social-link" target="_blank">
-                                   <i class="fab fa-twitter"></i>
+                               <a href="https://www.instagram.com/kal12._/" class="social-link" target="_blank">
+                                   <i class="fab fa-instagram"></i>
                                </a>
                            </div>
                        </div>
@@ -307,10 +312,10 @@ $user_data = isset($_COOKIE['historical_jogja_user']) ? $_COOKIE['historical_jog
                                <a href="https://github.com/aiceu" class="social-link" target="_blank">
                                    <i class="fab fa-github"></i>
                                </a>
-                               <a href="#" class="social-link" target="_blank">
-                                   <i class="fab fa-behance"></i>
+                               <a href="https://www.linkedin.com/in/faisa-edenia-sekarlangit-691139333/" class="social-link" target="_blank">
+                                   <i class="fab fa-linkedin"></i>
                                </a>
-                               <a href="#" class="social-link" target="_blank">
+                               <a href="https://www.instagram.com/faisadenia/" class="social-link" target="_blank">
                                    <i class="fab fa-instagram"></i>
                                </a>
                            </div>
@@ -335,13 +340,13 @@ $user_data = isset($_COOKIE['historical_jogja_user']) ? $_COOKIE['historical_jog
                                <li>Digital Storytelling</li>
                            </ul>
                            <div class="social-links">
-                               <a href="#" class="social-link" target="_blank">
-                                   <i class="fab fa-medium"></i>
+                               <a href="https://github.com/MuhammadDzakiWirayuda" class="social-link" target="_blank">
+                                   <i class="fab fa-github"></i>
                                </a>
-                               <a href="#" class="social-link" target="_blank">
+                               <a href="https://www.linkedin.com/in/muhammad-dzaki-wirayuda-61827b32b/" class="social-link" target="_blank">
                                    <i class="fab fa-linkedin"></i>
                                </a>
-                               <a href="#" class="social-link" target="_blank">
+                               <a href="https://www.instagram.com/ydwho_/" class="social-link" target="_blank">
                                    <i class="fab fa-instagram"></i>
                                </a>
                            </div>
@@ -389,71 +394,64 @@ $user_data = isset($_COOKIE['historical_jogja_user']) ? $_COOKIE['historical_jog
        </section>
    </main>
 
-   <!-- Footer -->
    <footer class="site-footer">
-       <div class="footer-waves">
-           <svg class="waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-               <path fill="#914e18" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,165.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-           </svg>
-       </div>
-       
-       <div class="footer-content">
-           <div class="footer-grid">
-               <div class="footer-section">
-                   <h3 class="footer-title">Historical Jogja</h3>
-                   <p class="footer-desc">Melestarikan Warisan Sejarah Yogyakarta melalui teknologi digital yang inovatif.</p>
-                   <div class="footer-social">
-                       <a href="#" class="social-link" title="Facebook">
-                           <i class="fab fa-facebook-f"></i>
-                       </a>
-                       <a href="#" class="social-link" title="Instagram">
-                           <i class="fab fa-instagram"></i>
-                       </a>
-                       <a href="#" class="social-link" title="Twitter">
-                           <i class="fab fa-twitter"></i>
-                       </a>
-                       <a href="#" class="social-link" title="YouTube">
-                           <i class="fab fa-youtube"></i>
-                       </a>
-                   </div>
-               </div>
-               <div class="footer-section">
-                   <h3 class="footer-title">Tautan Cepat</h3>
-                   <ul class="footer-links">
-                       <li><a href="beranda.php">Beranda</a></li>
-                       <li><a href="bbsejarah.php">Bangunan Bersejarah</a></li>
-                       <li><a href="gallery.php">Galeri</a></li>
-                       <li><a href="timeline.php">Timeline</a></li>
-                       <li><a href="quiz.php">Kuis</a></li>
-                   </ul>
-               </div>
+    <!-- Wave Animation -->
+    <div class="footer-waves-wrapper">
+    <?php 
+    $svgPath = __DIR__ . '/../components/footer/footer-waves-svg.php';
+    if (file_exists($svgPath)) {
+        include $svgPath;
+    } else {
+        echo "<!-- SVG file not found at: $svgPath -->";
+    }
+    ?>
+</div>
 
-               <div class="footer-section">
-                   <h3 class="footer-title">Kontak</h3>
-                   <ul class="footer-contact">
-                       <li>
-                           <i class="fas fa-map-marker-alt"></i>
-                           <span>Jl. Malioboro No. 123, Yogyakarta</span>
-                       </li>
-                       <li>
-                           <i class="fas fa-phone"></i>
-                           <span>+62 274 123456</span>
-                       </li>
-                       <li>
-                           <i class="fas fa-envelope"></i>
-                           <span>info@historicaljogja.com</span>
-                       </li>
-                   </ul>
-               </div>
+    <!-- Footer Content -->
+    <div class="footer-content">
+        <div class="footer-grid">
+            <!-- Company Info Section -->
+            <div class="footer-section">
+                <h3 class="footer-title">Historical Jogja</h3>
+                <p class="footer-desc">Melestarikan Warisan Sejarah Yogyakarta melalui teknologi digital yang inovatif.</p>
+                <div class="footer-social">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
 
+            <!-- Quick Links Section -->
+            <div class="footer-section">
+                <h3 class="footer-title">Tautan Cepat</h3>
+                <ul class="footer-links">
+                    <li><a href="beranda.php">Beranda</a></li>
+                    <li><a href="bbsejarah.php">Bangunan Bersejarah</a></li>
+                    <li><a href="gallery.php">Galeri</a></li>
+                    <li><a href="timeline.php">Timeline</a></li>
+                    <li><a href="kuis.php">Kuis</a></li>
+                    <li><a href="petawisata.php">Peta</a></li>
+                    <li><a href="kontak.php">Kontak</a></li>
+                </ul>
+            </div>
 
-           </div>
-       </div>
+            <!-- Contact Section -->
+            <div class="footer-section">
+                <h3 class="footer-title">Kontak</h3>
+                <ul class="footer-contact">
+                    <li><i class="fas fa-map-marker-alt"></i> Jl. Malioboro No. 123, Yogyakarta</li>
+                    <li><i class="fas fa-phone"></i> +62 274 123456</li>
+                    <li><i class="fas fa-envelope"></i> info@historicaljogja.com</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
-       <div class="footer-bottom">
-           <p>&copy; <?php echo date('Y'); ?> Historical Jogja. All rights reserved.</p>
-       </div>
-   </footer>
+    <!-- Copyright -->
+    <div class="footer-bottom">
+        <p>&copy; <?php echo date('Y'); ?> Historical Jogja. All rights reserved.</p>
+    </div>
+
 
    <!-- Scripts -->
    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>

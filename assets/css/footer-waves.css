@@ -1,0 +1,177 @@
+/* Save as: assets/css/footer-waves.css */
+.svg {
+    transform: scaleY(-1);
+}
+
+/* Main Footer Container */
+.site-footer {
+    position: relative;
+    width: 100%;
+    background: #1f2937;
+    margin-top: 4rem;
+    padding-top: 2rem; /* Reduced padding to accommodate waves */
+    color: #ffffff;
+    overflow: hidden;
+}
+
+.footer-waves {
+    position: absolute;
+    top: -1px; /* Sedikit overlap untuk menghindari gap */
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg); /* Membalik hanya waves */
+}
+
+/* SVG waves */
+.footer-waves svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 150px;
+    /* Tidak perlu transform di sini karena sudah di parent */
+}
+
+/* Waves Wrapper */
+.footer-waves-wrapper {
+    position: absolute;
+    top: -150px; /* Negative height to overlap content */
+    left: 0;
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    z-index: 1;
+    pointer-events: none; /* Let clicks pass through */
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    perspective: 1000px;
+    
+}
+/* Footer sections */
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    padding: 2rem;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* SVG Base Styles */
+.footer-waves-wrapper svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px); /* Prevent sub-pixel gaps */
+    height: 150px;
+    transform: rotateX(180deg); /* Flip waves upside down */
+    will-change: transform;
+}
+
+/* Wave Animation Styles */
+.footer-waves-wrapper .waves use {
+    animation: waveFlow 20s cubic-bezier(0.55, 0, 0.1, 1) infinite;
+    transform-origin: center center;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+/* Staggered Wave Animations */
+.footer-waves-wrapper use:nth-child(1) {
+    animation-delay: -2s;
+    animation-duration: 22s;
+}
+
+.footer-waves-wrapper use:nth-child(2) {
+    animation-delay: -4s;
+    animation-duration: 18s;
+}
+
+.footer-waves-wrapper use:nth-child(3) {
+    animation-delay: -6s;
+    animation-duration: 14s;
+}
+
+/* Wave Animation Keyframes */
+@keyframes waveFlow {
+    0% {
+        transform: translate3d(-90px, 0, 0);
+    }
+    50% {
+        transform: translate3d(85px, 0, 0);
+    }
+    100% {
+        transform: translate3d(-90px, 0, 0);
+    }
+}
+
+/* Konten footer wrapper */
+.footer-content {
+    position: relative;
+    z-index: 2;
+    /* Tidak perlu transform di sini */
+}
+
+/* Performance Optimizations for Mobile */
+@media (prefers-reduced-motion: reduce) {
+    .footer-waves-wrapper use {
+        animation-duration: 30s;
+    }
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1440px) {
+    .footer-waves-wrapper {
+        height: 120px;
+        top: -120px;
+    }
+    
+    .footer-waves-wrapper svg {
+        height: 120px;
+    }
+    
+    .site-footer {
+        padding-top: 120px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .footer-waves-wrapper {
+        height: 100px;
+        top: -100px;
+    }
+    
+    .footer-waves-wrapper svg {
+        height: 100px;
+    }
+    
+    .site-footer {
+        padding-top: 100px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .footer-waves-wrapper {
+        height: 80px;
+        top: -80px;
+    }
+    
+    .footer-waves-wrapper svg {
+        height: 80px;
+    }
+    
+    .site-footer {
+        padding-top: 80px;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .footer-waves-wrapper {
+        display: none;
+    }
+}

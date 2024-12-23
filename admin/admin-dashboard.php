@@ -171,13 +171,13 @@ if (!isset($_SESSION['admin_id'])) {
             </div>
             <div class="form-group">
                 <label for="ticketPrice">Harga Tiket</label>
-                <input type="text" id="ticketPrice" name="ticket_price" 
-                    placeholder="Contoh: Dewasa Rp 15.000, Anak-anak Rp 8.000">
+                <textarea id="ticketPrice" name="ticket_price" row="3" 
+                    placeholder="Contoh: Dewasa Rp 15.000, Anak-anak Rp 8.000"></textarea>
             </div>
             <div class="form-group">
                 <label for="contact">Kontak</label>
-                <input type="text" id="contact" name="contact" 
-                    placeholder="Nomor telepon atau email">
+                <textarea id="contact" name="contact" row="2"
+                    placeholder="Nomor telepon atau email"></textarea>
             </div>
         </div>
     </section>

@@ -1,0 +1,902 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: #f9f5e9;
+  min-height: 100vh;
+}
+
+/* Header and Navigation */
+header {
+  position: relative;
+  width: 100%;
+  z-index: 10;
+  height: 35px;
+}
+
+nav ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(139, 69, 19);
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+nav ul li {
+  margin: auto;
+}
+
+nav ul li a {
+  color: #f9f5e9;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+nav ul li a:hover {
+  color: #ffd700;
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-3px);
+  padding: 0.5rem 1rem;
+}
+
+.quiz-container {
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 130px;
+  margin-bottom:100px;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.quiz-header h1 {
+  color: #8b4513;
+  margin-bottom: 10px;
+}
+
+.quiz-header p {
+  color: #666;
+}
+
+.question-container {
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  animation: slideIn 0.5s ease-out;
+}
+
+.question {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.option {
+  padding: 15px;
+  background-color: #f0f0f0;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.option:hover {
+  background-color: #e0e0e0;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.option::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.option:hover::after {
+  left: 100%;
+}
+
+.option:active {
+  animation: bounce 0.3s ease;
+}
+
+.option.selected {
+  background-color: #8b4513;
+  color: white;
+  animation: selectBounce 0.5s ease;
+}
+
+.option.correct {
+  background-color: #4caf50;
+  color: white;
+  animation: correctBounce 0.5s ease;
+}
+
+.option.wrong {
+  background-color: #f44336;
+  color: white;
+  animation: wrongBounce 0.5s ease;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+button {
+  margin: 10px 20px;
+  padding: 10px 20px;
+  background-color: #8b4513;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #6b3410;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.result-container {
+  text-align: center;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  display: none;
+}
+
+.score {
+  font-size: 24px;
+  color: #8b4513;
+  margin-bottom: 10px;
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes selectBounce {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.1);
+  }
+  80% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes correctBounce {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.1);
+  }
+  80% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes wrongBounce {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-5px);
+  }
+  40%,
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+@media (max-width: 768px) {
+  .quiz-container {
+    margin: 10px;
+    padding: 15px;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option {
+    padding: 8px 12px;
+  }
+
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav ul li {
+    margin: 0.5rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .options {
+    grid-template-columns: 1fr;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.leaderboard-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.leaderboard-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+#leaderboard-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Style untuk 3 pemenang teratas dengan card baru */
+.leaderboard-item:nth-child(1),
+.leaderboard-item:nth-child(2),
+.leaderboard-item:nth-child(3) {
+  position: relative;
+  width: 220px;
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  font-weight: bold;
+  border-radius: 15px;
+  cursor: pointer;
+  color: #fff;
+  transition: transform 0.3s ease;
+}
+
+/* Warna untuk masing-masing peringkat */
+.leaderboard-item:nth-child(1) {
+  background: linear-gradient(135deg, #ffd700, #ffa500);
+}
+
+.leaderboard-item:nth-child(2) {
+  background: linear-gradient(135deg, #c0c0c0, #a9a9a9);
+}
+
+.leaderboard-item:nth-child(3) {
+  background: linear-gradient(135deg, #cd7f32, #b8860b);
+}
+
+/* Efek hover dengan sudut */
+.leaderboard-item:nth-child(-n + 3)::before,
+.leaderboard-item:nth-child(-n + 3)::after {
+  position: absolute;
+  content: "";
+  width: 20%;
+  height: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  font-weight: bold;
+  transition: all 0.5s;
+}
+
+.leaderboard-item:nth-child(-n + 3)::before {
+  top: 0;
+  right: 0;
+  border-radius: 0 15px 0 100%;
+  background-color: rgba(255, 255, 255, 0.801);
+}
+
+.leaderboard-item:nth-child(-n + 3)::after {
+  bottom: 0;
+  left: 0;
+  border-radius: 0 100% 0 15px;
+  background-color: rgba(0, 0, 0, 0.662);
+}
+
+.leaderboard-item:nth-child(-n + 3):hover::before,
+.leaderboard-item:nth-child(-n + 3):hover::after {
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  transition: all 0.5s;
+}
+
+/* Konten dalam card */
+.leaderboard-item:nth-child(-n + 3) span {
+  position: relative;
+  z-index: 1;
+  font-size: 1.2rem;
+  margin: 5px 0;
+}
+
+/* Tambahkan teks pada hover */
+.leaderboard-item:nth-child(1):hover::after {
+  content: "Juara 2";
+}
+
+.leaderboard-item:nth-child(2):hover::after {
+  content: "Juara 1";
+}
+
+.leaderboard-item:nth-child(3):hover::after {
+  content: "Juara 3";
+}
+
+/* Style untuk peringkat 4 dan seterusnya */
+.leaderboard-item:nth-child(n + 4) {
+  width: 100%;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #8b4513;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+  margin-bottom: 10px;
+  padding: 0 15px;
+  transition: 200ms;
+}
+
+.leaderboard-item:nth-child(n + 4) span:first-child {
+  color: white;
+  font-weight: bold;
+  transform: translateX(0);
+  transition: 200ms;
+}
+
+.leaderboard-item:nth-child(n + 4) span:last-child {
+  position: relative;
+  color: white;
+  font-weight: bold;
+  padding-left: 15px;
+  border-left: 1px solid #733a0f;
+  transition: 200ms;
+}
+
+.leaderboard-item:nth-child(n + 4):hover {
+  background: #a35518;
+}
+
+.leaderboard-item:nth-child(n + 4):hover span:first-child {
+  transform: translateX(10px);
+}
+
+.leaderboard-item:nth-child(n + 4):hover span:last-child {
+  transform: translateX(-10px);
+}
+
+.leaderboard-item:nth-child(n + 4):active {
+  transform: scale(0.98);
+}
+
+/* Responsive design untuk leaderboard */
+@media (max-width: 768px) {
+  #leaderboard-list {
+    grid-template-columns: 1fr;
+    padding-bottom: 20px;
+  }
+
+  .leaderboard-item:nth-child(-n + 3) {
+    margin-bottom: 30px;
+  }
+
+  .leaderboard-item:nth-child(1),
+  .leaderboard-item:nth-child(2),
+  .leaderboard-item:nth-child(3) {
+    order: initial;
+  }
+
+  #leaderboard-list::after {
+    display: none;
+  }
+}
+
+/* Style khusus untuk tombol di result container */
+.result-container button {
+  display: inline-block;
+  margin: 10px 5px;
+}
+
+.name-input {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Style untuk switch button */
+.switch {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 1.2em;
+  height: 3.3em;
+  margin-top: 20px;
+}
+
+.switch .chk {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 5px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 0.5em;
+  width: 2.4em;
+  border-radius: 5px;
+  left: -0.6em;
+  top: 0.2em;
+  background-color: white;
+  box-shadow: 0 6px 7px rgba(0, 0, 0, 0.3);
+  transition: 0.4s;
+}
+
+.slider:before,
+.slider:after {
+  content: "";
+  display: block;
+}
+
+.slider:after {
+  background: linear-gradient(transparent 50%, rgba(255, 255, 255, 0.15) 0) 0
+      50% / 50% 100%,
+    repeating-linear-gradient(
+        90deg,
+        rgb(255, 255, 255) 0,
+        rgb(255, 255, 255),
+        rgb(255, 255, 255) 20%,
+        rgb(255, 255, 255) 20%,
+        rgb(255, 255, 255) 40%
+      )
+      0 50% / 50% 100%,
+    radial-gradient(circle at 50% 50%, rgb(255, 255, 255) 25%, transparent 26%);
+  background-repeat: no-repeat;
+  border: 0.25em solid transparent;
+  border-left: 0.4em solid #ffffff;
+  border-right: 0 solid transparent;
+  transition: border-left-color 0.1s 0.3s ease-out, transform 0.3s ease-out;
+  transform: translateX(-22.5%) rotate(90deg);
+  transform-origin: 25% 50%;
+  position: relative;
+  top: 0.5em;
+  left: 0.55em;
+  width: 2em;
+  height: 1em;
+  box-sizing: border-box;
+}
+
+.chk:checked + .slider {
+  background-color: #8b4513;
+}
+
+.chk:focus + .slider {
+  box-shadow: 0 0 1px #8b4513;
+}
+
+.chk:checked + .slider:before {
+  transform: translateY(2.3em);
+}
+
+.chk:checked + .slider:after {
+  transform: rotateZ(90deg) rotateY(180deg) translateY(0.45em)
+    translateX(-1.4em);
+}
+
+/* =========================================
+   Footer Styles
+========================================= */
+/* Footer Links */
+/* Footer Styles */
+.site-footer {
+  position: relative;
+  width: 100%;
+  background: #1f2937; /* Or your desired footer background color */
+  margin-top: auto;
+/* To account for waves height */
+}
+
+/* Wave Animation */
+.footer-waves {
+  position: absolute;
+  top: -150px;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.footer-waves svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 150px;
+}
+
+/* Footer Content */
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0rem 2rem 3rem;
+  position: relative;
+  z-index: 2;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 3rem;
+}
+
+/* Footer Sections */
+.footer-title {
+  color: white;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.footer-title::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  width: 50px;
+  height: 2px;
+  background: #914e18;
+}
+
+.footer-desc {
+  color: #9ca3af;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+/* Social Links */
+.footer-social {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-link {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  background: var(--primary-color);
+  transform: translateY(-3px);
+}
+
+/* Footer Links */
+.footer-links {
+  list-style: none;
+}
+
+.footer-links a {
+  color: #9ca3af;
+  text-decoration: none;
+  display: block;
+  padding: 0.5rem 0;
+  transition: all 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #914e18;
+  transform: translateX(5px);
+}
+
+/* Footer Contact */
+.footer-contact li {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  color: #9ca3af;
+  margin-bottom: 1rem;
+}
+
+.footer-contact i {
+  color: var(--primary-color);
+}
+
+/* Newsletter Form */
+.newsletter-form .form-group {
+  position: relative;
+}
+
+.newsletter-form input {
+  width: 100%;
+  padding: 1rem;
+  padding-right: 4rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-md);
+  color: #fff;
+}
+
+.newsletter-form input::placeholder {
+  color: #9ca3af;
+}
+
+.newsletter-form button {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--primary-color);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.newsletter-form button:hover {
+  background: var(--primary-light);
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  text-align: center;
+  padding: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: #9ca3af;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .footer-waves {
+      top: -100px;
+  }
+  
+  .footer-waves svg {
+      height: 100px;
+  }
+  
+  .footer-content {
+      padding: 4rem 1.5rem 2rem;
+  }
+  
+  .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+  }
+  
+  .footer-section {
+      text-align: center;
+  }
+
+  .footer-section h3 {
+      color: var(--white);
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+  }
+  
+  .footer-title::after {
+      left: 50%;
+      transform: translateX(-50%);
+  }
+  
+  .footer-social {
+      justify-content: center;
+  }
+  
+  .footer-contact li {
+      justify-content: center;
+  }
+  
+  .footer-links a:hover {
+      transform: none;
+  }
+}
+
+/* Footer Animation */
+@keyframes footerWave {
+  0% {
+      transform: translateX(0) translateZ(0) scaleY(1);
+  }
+  50% {
+      transform: translateX(-25%) translateZ(0) scaleY(0.95);
+  }
+  100% {
+      transform: translateX(-50%) translateZ(0) scaleY(1);
+  }
+}
+
+.footer-waves .waves {
+  animation: footerWave 15s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+}
+
+/* Print Styles */
+@media print {
+  .hero-section,
+  .filters-section,
+  .modal {
+      display: none !important;
+  }
+
+  .gallery-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 1rem !important;
+  }
+
+  .gallery-card {
+      break-inside: avoid;
+      page-break-inside: avoid;
+      box-shadow: none !important;
+      border: 1px solid #ccc;
+  }
+
+  .gallery-overlay {
+      display: none !important;
+  }
+
+  .footer-waves {
+      display: none !important;
+  }
+}
+
+/* Error Message */
+.error-message {
+  text-align: center;
+  padding: 2rem;
+  color: #dc2626;
+}
+
+.error-message i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+/* Empty Gallery */
+.empty-gallery {
+  text-align: center;
+  padding: 2rem;
+  color: #6b7280;
+}
+
+.empty-gallery i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+/* Image Preview Modal */
+.modal-preview-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  margin: 2rem auto;
+  background: transparent;
+}
+
+.modal-preview-content img {
+  max-width: 100%;
+  max-height: calc(90vh - 100px);
+  object-fit: contain;
+}
+
+.modal-preview-content .image-caption {
+  position: absolute;
+  bottom: -40px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: white;
+  padding: 1rem;
+  background: rgba(0,0,0,0.5);
+  border-radius: 0.5rem;
+}

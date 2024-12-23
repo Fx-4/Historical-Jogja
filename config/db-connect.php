@@ -1,9 +1,9 @@
 <?php
 class Database {
-    private $host = "localhost";
-    private $username = "root";  // Sesuaikan dengan username MySQL Anda
-    private $password = "";      // Sesuaikan dengan password MySQL Anda
-    private $database = "historical_jogja"; // Sesuaikan dengan nama database Anda
+    private $host = "my-mariadb";
+    private $username = "root";
+    private $password = "root";
+    private $database = "historical_jogja";
     private $conn;
 
     public function connect() {
@@ -32,4 +32,3 @@ class Database {
     }
 }
 ?>
-</antArtifact

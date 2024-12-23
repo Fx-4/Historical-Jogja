@@ -1,0 +1,77 @@
+services:
+  webserver:
+    image: php:8.1-apache
+    container_name: my-apache
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www/html
+      - ./uploads:/var/www/html/uploads
+    command: bash -c "apt-get update && apt-get install -y default-mysql-client && docker-php-ext-install mysqli && a2enmod rewrite && apache2-foreground"
+    depends_on:
+      - database
+    networks:
+      - app-network
+
+  database:
+    image: mariadb:latest
+    container_name: my-mariadb
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: historical_jogja
+      MYSQL_USER: tulis
+      MYSQL_PASSWORD: tulis
+      MYSQL_ROOT_HOST: '%'
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - app-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: my-phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: database
+      MYSQL_ROOT_PASSWORD: root
+    depends_on:
+      - database
+    networks:
+      - app-network
+
+  nagios:
+    image: jasonrivers/nagios:latest
+    container_name: my-nagios
+    ports:
+      - "8081:80"
+    environment:
+      NAGIOSADMIN_USER: nagiosadmin
+      NAGIOSADMIN_PASS: nagios123
+    volumes:
+      - nagios_etc:/opt/nagios/etc
+      - nagios_var:/opt/nagios/var
+      - nagios_custom_configs:/opt/nagios/etc/custom_configs
+    
+    depends_on:
+      - webserver
+      - database
+
+    networks:
+      - app-network
+
+volumes:
+  mariadb_data:
+    driver: local
+  nagios_etc:
+    driver: local
+  nagios_var:
+    driver: local
+  nagios_custom_configs:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge

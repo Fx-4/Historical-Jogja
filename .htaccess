@@ -1,0 +1,27 @@
+RewriteEngine On
+Options -Indexes
+
+# Set base directory
+RewriteBase /
+
+# Jika mengakses root directory
+RewriteRule ^$ pages/beranda.php [L]
+
+# Admin Rules
+RewriteRule ^admin/?$ admin/adminlogin.php [NC,L]
+RewriteRule ^admin/dashboard/?$ admin/admin-dashboard.php [NC,L]
+RewriteRule ^admin/gallery/?$ admin/gallery.php [NC,L]
+RewriteRule ^admin/messages/?$ admin/messages.php [NC,L]
+RewriteRule ^admin/tourist-map/?$ admin/tourist-map.php [NC,L]
+RewriteRule ^admin/list-building/?$ admin/list-building.php [NC,L]
+
+# Jika file atau directory tidak ada
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Remove .php extension for pages
+RewriteRule ^beranda/?$ pages/beranda.php [NC,L]
+RewriteRule ^([^\.]+)/?$ pages/$1.php [NC,L]
+
+# Set default index
+DirectoryIndex pages/beranda.php

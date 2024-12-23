@@ -1,21 +1,21 @@
-<!-- components/navbar/PrimaryNav.php -->
+<!-- components/navbar/PrimaryNav -->
 <nav class="primary-nav" id="primaryNav">
     <div class="nav-container">
         <div class="nav-brand">
-            <a href="beranda.php">
+            <a href="beranda">
                 <img src="../assets/images/logo.jpeg" alt="Logo" width="40" height="40">
                 <span>Historical Jogja</span>
             </a>
         </div>
         
         <div class="nav-links">
-            <a href="beranda.php" data-index="0">Beranda</a>
-            <a href="bbsejarah.php" data-index="1">Bangunan Bersejarah</a>
-            <a href="gallery.php" data-index="2">Galeri</a>
-            <a href="timeline.php" data-index="3">Timeline</a>
-            <a href="quiz.php" data-index="4">Kuis</a>
-            <a href="petawisata.php" data-index="5">Peta</a>
-            <a href="kontak.php" data-index="6">Kontak</a>
+            <a href="beranda" data-index="0">Beranda</a>
+            <a href="bbsejarah" data-index="1">Bangunan Bersejarah</a>
+            <a href="gallery" data-index="2">Galeri</a>
+            <a href="timeline" data-index="3">Timeline</a>
+            <a href="quiz" data-index="4">Kuis</a>
+            <a href="petawisata" data-index="5">Peta</a>
+            <a href="kontak" data-index="6">Kontak</a>
         </div>
     </div>
 </nav>

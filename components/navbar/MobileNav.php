@@ -14,13 +14,13 @@
                 </button>
             </div>
             <nav class="menu-links">
-                <a href="beranda.php" class="menu-link">Beranda</a>
-                <a href="bbsejarah.php" class="menu-link">Bangunan Bersejarah</a>
-                <a href="gallery.php" class="menu-link">Galeri</a>
-                <a href="timeline.php" class="menu-link">Timeline</a>
-                <a href="quiz.php" class="menu-link">Kuis</a>
-                <a href="petawisata.php" class="menu-link">Peta</a>
-                <a href="kontak.php" class="menu-link">Kontak</a>
+                <a href="beranda." class="menu-link">Beranda</a>
+                <a href="bbsejarah." class="menu-link">Bangunan Bersejarah</a>
+                <a href="gallery." class="menu-link">Galeri</a>
+                <a href="timeline." class="menu-link">Timeline</a>
+                <a href="quiz." class="menu-link">Kuis</a>
+                <a href="petawisata." class="menu-link">Peta</a>
+                <a href="kontak." class="menu-link">Kontak</a>
             </nav>
         </div>
     </div>

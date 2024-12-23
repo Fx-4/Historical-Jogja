@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         
         // Query disesuaikan dengan struktur tabel
-        $query = "INSERT INTO buildings (
+        $query = "INSERT INTO historical_buildings (
             building_name, 
             category, 
             construction_year, 
